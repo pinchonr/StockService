@@ -1,0 +1,1 @@
+Rest service to get the stock of a book for a given isbn
