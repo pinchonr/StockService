@@ -16,6 +16,14 @@ import java.net.URI;
 @Path("StockService")
 public class Stock {
 	private boolean hasTableBeenCreated=false;
+	
+	@Path("/")
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getStockServiceHome(){
+		return "Stock service";
+		
+	}
 
 	/**
 	 * Method handling HTTP GET requests. The returned object will be sent
@@ -77,8 +85,10 @@ public class Stock {
 
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate("CREATE TABLE LIBRARY(ID INT PRIMARY KEY NOT NULL, ISBN BIGINT NOT NULL, TITLE TEXT NOT NULL, AUTHOR TEXT NOT NULL, STOCK INT NOT NULL);");
+			hasTableBeenCreated=true;
 			return true;
 		} catch (Exception e) {
+			hasTableBeenCreated=false;
 			return false;
 		}
 		
