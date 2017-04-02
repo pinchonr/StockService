@@ -35,10 +35,11 @@ public class Stock {
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public int getStockResp() {
+		boolean created=false;
 		if(!hasTableBeenCreated){
-			createTable();
+			created=createTable();
 		}
-		
+		System.out.println(created);
 		return 0;
 	}
 
