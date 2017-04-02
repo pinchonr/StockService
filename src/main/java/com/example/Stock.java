@@ -11,7 +11,7 @@ import java.net.URI;
 
 
 /**
- * Root resource (exposed at "myresource" path)
+ * Root resource
  */
 @Path("StockService")
 public class Stock {
@@ -60,9 +60,9 @@ public class Stock {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM library");
 
-			String out = "Hello!\n";
+			String out = "";
 			while (rs.next()) {
-				out += "Read from DB: " + rs.getTimestamp("tick") + "\n";
+				out += "Read from DB: " + rs.getRow() + "\n";
 			}
 
 			return out;
@@ -76,8 +76,7 @@ public class Stock {
 			Connection connection = getConnection();
 
 			Statement stmt = connection.createStatement();
-			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS library"
-					+ "ID INT PRIMARY KEY NOT NULL");
+			stmt.executeUpdate("CREATE TABLE LIBRARY(ID INT PRIMARY KEY NOT NULL, ISBN BIGINT NOT NULL, TITLE TEXT NOT NULL, AUTHOR TEXT NOT NULL, STOCK INT NOT NULL);");
 			return true;
 		} catch (Exception e) {
 			return false;
