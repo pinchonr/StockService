@@ -55,7 +55,7 @@ public class Stock {
 			 connection = getConnection();
 			Statement stmt = connection.createStatement();
 			stmt.execute("CREATE TABLE IF NOT EXISTS LIBRARY(ID INT PRIMARY KEY NOT NULL, ISBN TEXT NOT NULL, TITLE TEXT NOT NULL, AUTHOR TEXT NOT NULL, STOCK INT NOT NULL);");
-			//stmt.executeUpdate("INSERT INTO LIBRARY (ISBN,TITLE,AUTHOR,STOCK) VALUES (1234567890111,TEST,TEST,20)");
+			stmt.executeUpdate("INSERT INTO LIBRARY (ISBN,TITLE,AUTHOR,STOCK) VALUES (1234567890111,TEST,TEST,20)");
 			return "Table exists";
 		} catch (Exception e) {
 			return e.getMessage();
@@ -79,8 +79,13 @@ public class Stock {
 			Connection connection = getConnection();
 			Statement stmt = connection.createStatement();
 			ResultSet result= stmt.executeQuery("SELECT STOCK FROM LIBRARY WHERE ISBN like '"+isbn+"';");
-			result.next();
-			return result.getString("STOCK");
+			if(result.next()) {
+
+				String stock = result.getString("STOCK");
+				System.out.println("Stock : " + stock);
+				return stock;
+			}
+			return "An error occured while getting the stock";
 			
 		} catch (Exception e) {
 			return e.getMessage();
