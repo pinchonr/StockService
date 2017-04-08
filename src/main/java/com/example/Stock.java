@@ -35,7 +35,7 @@ public class Stock {
 	 *
 	 * @return String that will be returned as a text/plain response.
 	 */
-	@Path("/stock/{isbn}/")    
+	@Path("/stock/{isbn}")    
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response getStockResp(@QueryParam("isbn") String isbn) {
