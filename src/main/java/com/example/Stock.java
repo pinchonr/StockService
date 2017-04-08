@@ -2,6 +2,7 @@ package com.example;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -37,8 +38,8 @@ public class Stock {
 	 */
 	@Path("/stock/{isbn}")    
 	@GET
-	@Produces(MediaType.TEXT_HTML)
-	public Response getStockResp(@QueryParam("isbn") String isbn) {
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response getStockResp(@PathParam("isbn") String isbn) {
 		String answer=createTableIfNotExists();
 		if(answer =="Table exists"){
 			return Response.status(200).entity(getStockByISBN(isbn)).build();
