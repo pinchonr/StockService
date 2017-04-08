@@ -83,7 +83,7 @@ public class Stock {
 				String stock = String.valueOf(result.getInt("STOCK"));
 				return stock;
 			}
-			return "An error occured while getting the stock with isbn: "+isbn.trim();
+			return "An error occured while getting the stock";
 			
 		} catch (Exception e) {
 			return e.getMessage();
