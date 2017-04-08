@@ -79,7 +79,7 @@ public class Stock {
 		try {
 			Connection connection = getConnection();
 			Statement stmt = connection.createStatement();
-			ResultSet result= stmt.executeQuery("SELECT STOCK FROM LIBRARY" );// STOCK ... WHERE ISBN like '"+isbn+"';"
+			ResultSet result= stmt.executeQuery("SELECT STOCK FROM LIBRARY WHERE ISBN LIKE '"+isbn+"';" );
 			if(result.next()) {
 				String stock = result.getString("STOCK");
 				return stock;
