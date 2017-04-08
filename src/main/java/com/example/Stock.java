@@ -38,24 +38,25 @@ public class Stock {
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response getStockResp(@QueryParam("isbn") String isbn) {
-		if(createTableIfNotExists()){
+		String answer=createTableIfNotExists();
+		if(answer =="Table exists"){
 			return Response.status(200).entity(getStockByISBN(isbn)).build();
 		}
 		else{
-			return Response.status(500).entity("An error occured when verifying if the table exits").build();
+			return Response.status(500).entity("An error occured when verifying if the table exits: "+ answer).build();
 		}
 
 	}
 
-	private boolean createTableIfNotExists(){
+	private String createTableIfNotExists(){
 		try {
 			Connection connection = getConnection();
 			Statement stmt = connection.createStatement();
 			stmt.execute("CREATE TABLE IF NOT EXISTS LIBRARY(ID INT PRIMARY KEY NOT NULL, ISBN TEXT NOT NULL, TITLE TEXT NOT NULL, AUTHOR TEXT NOT NULL, STOCK INT NOT NULL);");
-			stmt.executeUpdate("INSERT INTO LIBRARY (ISBN,TITLE,AUTHOR,STOCK) VALUES (1234567890111,TEST,TEST,20)");
-			return true;
+			//stmt.executeUpdate("INSERT INTO LIBRARY (ISBN,TITLE,AUTHOR,STOCK) VALUES (1234567890111,TEST,TEST,20)");
+			return "Table exists";
 		} catch (Exception e) {
-			return false;
+			return e.getMessage();
 		}
 		
 	}
