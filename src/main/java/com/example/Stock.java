@@ -41,7 +41,6 @@ public class Stock {
 	public Response getStockResp(@QueryParam("isbn") String isbn) {
 		String answer=createTableIfNotExists();
 		if(answer =="Table exists"){
-			System.out.println("Table exists");
 			return Response.status(200).entity(getStockByISBN(isbn)).build();
 		}
 		else{
@@ -79,12 +78,12 @@ public class Stock {
 		try {
 			Connection connection = getConnection();
 			Statement stmt = connection.createStatement();
-			ResultSet result= stmt.executeQuery("SELECT STOCK FROM LIBRARY WHERE ISBN LIKE '"+isbn+"';" );
+			ResultSet result= stmt.executeQuery("SELECT STOCK FROM LIBRARY WHERE ISBN LIKE '"+isbn.trim()+"';" );
 			if(result.next()) {
 				String stock = result.getString("STOCK");
 				return stock;
 			}
-			return "An error occured while getting the stock";
+			return "An error occured while getting the stock with isbn: "+isbn.trim();
 			
 		} catch (Exception e) {
 			return e.getMessage();
