@@ -6,9 +6,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import java.sql.*;
 import java.net.URISyntaxException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.net.URI;
 
 
@@ -18,8 +21,6 @@ import java.net.URI;
  */
 @Path("StockService")
 public class Stock {
-	private boolean hasTableBeenCreated=false;
-
 	@Path("/")
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
@@ -49,14 +50,26 @@ public class Stock {
 	}
 
 	private String createTableIfNotExists(){
+		Connection connection=null;
 		try {
-			Connection connection = getConnection();
+			 connection = getConnection();
 			Statement stmt = connection.createStatement();
 			stmt.execute("CREATE TABLE IF NOT EXISTS LIBRARY(ID INT PRIMARY KEY NOT NULL, ISBN TEXT NOT NULL, TITLE TEXT NOT NULL, AUTHOR TEXT NOT NULL, STOCK INT NOT NULL);");
 			//stmt.executeUpdate("INSERT INTO LIBRARY (ISBN,TITLE,AUTHOR,STOCK) VALUES (1234567890111,TEST,TEST,20)");
 			return "Table exists";
 		} catch (Exception e) {
 			return e.getMessage();
+		}
+		finally{
+			if(connection!=null){
+				try{
+					connection.close();
+				}
+				catch(Exception e){
+					//ignore exception
+				}
+			}
+			
 		}
 		
 	}
@@ -65,7 +78,7 @@ public class Stock {
 		try {
 			Connection connection = getConnection();
 			Statement stmt = connection.createStatement();
-			ResultSet result= stmt.executeQuery("SELECT STOCK FROM LIBRARY WHERE ISBN like "+isbn+";");
+			ResultSet result= stmt.executeQuery("SELECT STOCK FROM LIBRARY WHERE ISBN like '"+isbn+"';");
 			result.next();
 			return result.getString("STOCK");
 			
