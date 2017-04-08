@@ -37,7 +37,7 @@ public class Stock {
 	 */
 	@Path("/stock/{isbn}")    
 	@GET
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_HTML)
 	public Response getStockResp(@QueryParam("isbn") String isbn) {
 		String answer=createTableIfNotExists();
 		if(answer =="Table exists"){
