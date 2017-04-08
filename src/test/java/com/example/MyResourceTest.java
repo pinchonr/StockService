@@ -18,12 +18,11 @@ public class MyResourceTest extends JerseyTest {
     }
 
     /**
-     * Test to see that the message "Got it!" is sent in the response.
+     * Test to see that the message "Stock service" is sent in the response.
      */
     @Test
     public void testGetIt() {
         final String responseMsg = target().path("StockService/").request().get(String.class);
-
         assertEquals("Stock service", responseMsg);
     }
 }
