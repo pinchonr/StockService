@@ -80,7 +80,7 @@ public class Stock {
 			Statement stmt = connection.createStatement();
 			ResultSet result= stmt.executeQuery("SELECT STOCK FROM LIBRARY WHERE ISBN LIKE '"+isbn.trim()+"';" );
 			if(result.next()) {
-				String stock = result.getString("STOCK");
+				String stock = String.valueOf(result.getInt("STOCK"));
 				return stock;
 			}
 			return "An error occured while getting the stock with isbn: "+isbn.trim();
