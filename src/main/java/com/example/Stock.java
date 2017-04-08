@@ -54,8 +54,8 @@ public class Stock {
 		try {
 			 connection = getConnection();
 			Statement stmt = connection.createStatement();
-			stmt.execute("CREATE TABLE IF NOT EXISTS LIBRARY(ID SERIAL PRIMARY KEY NOT NULL, ISBN TEXT NOT NULL, TITLE TEXT NOT NULL, AUTHOR TEXT NOT NULL, STOCK INT NOT NULL);");
-			stmt.executeUpdate("INSERT INTO LIBRARY (ISBN,TITLE,AUTHOR,STOCK) VALUES ('1234567890111','TEST','TEST','20')");
+			stmt.execute("CREATE TABLE IF NOT EXISTS LIBRARY(ID SERIAL PRIMARY KEY, ISBN TEXT NOT NULL, TITLE TEXT NOT NULL, AUTHOR TEXT NOT NULL, STOCK INT NOT NULL);");
+			stmt.executeUpdate("INSERT INTO LIBRARY (ISBN,TITLE,AUTHOR,STOCK) VALUES ('1234567890111','TEST','TEST',20)");
 			return "Table exists";
 		} catch (Exception e) {
 			return e.getMessage();
