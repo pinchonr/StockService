@@ -66,6 +66,7 @@ public class Stock {
 			Connection connection = getConnection();
 			Statement stmt = connection.createStatement();
 			ResultSet result= stmt.executeQuery("SELECT STOCK FROM LIBRARY WHERE ISBN like "+isbn+";");
+			result.next();
 			return result.getString("STOCK");
 			
 		} catch (Exception e) {
